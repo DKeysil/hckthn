@@ -35,6 +35,8 @@ class Task(models.Model):
         DONE = 3
         CLOSED = 4
 
+    state = models.IntegerField(choices=State.choices)
+
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE, related_name="tasks")
 
 
