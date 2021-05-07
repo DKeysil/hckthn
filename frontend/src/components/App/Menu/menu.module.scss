@@ -1,0 +1,37 @@
+.wrapper {
+  padding: 20px 0;
+  width: 240px;
+
+  :global(.ant-menu-item-selected)::after {
+    content: none;
+  }
+}
+
+.titleWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.title {
+  margin: 0 !important;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: width 0.3s;
+  width: 80px;
+}
+
+.titleCollapsed {
+  width: 0;
+}
+
+.button {
+  width: 14px;
+  transition: width 0.3s;
+}
+
+.buttonCollapsed {
+  width: 32px;
+}
