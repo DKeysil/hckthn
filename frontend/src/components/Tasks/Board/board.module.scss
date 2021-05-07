@@ -1,0 +1,19 @@
+.wrapper {
+  display: flex;
+  margin-right: -24px;
+  width: 100%;
+  overflow: scroll;
+}
+
+.button {
+  margin-bottom: 16px;
+}
+
+.list {
+  flex-shrink: 0;
+  background: #fafafa;
+  border-radius: 2px;
+  padding: 12px 12px 4px;
+  margin-right: 24px;
+  width: 280px;
+}

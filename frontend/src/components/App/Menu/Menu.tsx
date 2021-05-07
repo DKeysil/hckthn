@@ -35,7 +35,7 @@ const Menu = () => {
 
   return (
     <AntMenu
-      className={styles.wrapper}
+      className={classNames(styles.wrapper)}
       mode="inline"
       onSelect={handleClick}
       inlineCollapsed={collapsed}

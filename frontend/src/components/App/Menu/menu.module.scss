@@ -1,6 +1,7 @@
 .wrapper {
   padding: 20px 0;
   width: 240px;
+  flex-shrink: 0;
 
   :global(.ant-menu-item-selected)::after {
     content: none;
