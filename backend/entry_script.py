@@ -17,7 +17,6 @@ def create_objects():
     team_1 = Team.objects.create(title="Team number 1")
     team_2 = Team.objects.create(title="Another team")
 
-
     # Create Plans
 
     plan_1 = Plan.objects.create(
@@ -33,7 +32,6 @@ def create_objects():
         start_date=datetime(year=2021, month=5, day=1, hour=13, minute=23),
         end_date=datetime(year=2021, month=5, day=15, hour=17, minute=15),
     )
-
 
     # Create Users
 
@@ -76,7 +74,7 @@ def create_objects():
         description="This task have description",
         start_date=datetime(year=2021, month=5, day=3, hour=10, minute=15),
         end_date=datetime(year=2021, month=5, day=6, hour=17, minute=15),
-        type=0,
+        type=1,
         plan=plan_1,
         state=2,
         column_order=0,
@@ -88,14 +86,13 @@ def create_objects():
         title="Create django app",
         start_date=datetime(year=2021, month=5, day=6, hour=17, minute=15),
         end_date=datetime(year=2021, month=5, day=13, hour=10, minute=11),
-        type=0,
+        type=1,
         plan=plan_1,
         state=1,
         column_order=1,
     )
 
     task_2.responsibles.set([user_1, user_2])
-
 
     task_3 = Task.objects.create(
         title="Create another app",
@@ -109,7 +106,6 @@ def create_objects():
     )
 
     task_3.responsibles.set([user_3, user_4])
-
 
     task_4 = Task.objects.create(
         title="Leave",

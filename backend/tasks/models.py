@@ -39,7 +39,7 @@ class Task(models.Model):
     state = models.IntegerField(choices=State.choices)
 
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE, related_name="tasks")
-    column_order = models.IntegerField(null=True)
+    column_order = models.IntegerField()
 
 
 class Notification(models.Model):
