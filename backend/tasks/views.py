@@ -9,6 +9,7 @@ from .models import (
 )
 from rest_framework.permissions import IsAuthenticated
 import django_filters.rest_framework
+from rest_framework.response import Response
 
 # Create your views here.
 
@@ -42,6 +43,18 @@ class TaskViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_fields = ['plan']
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        queryset = queryset.order_by('start_date')
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     def update(self, request, *args, **kwargs):
         data = request.data
