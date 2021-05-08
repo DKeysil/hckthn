@@ -43,6 +43,6 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path(r'swagger(?P<format>\.json|\.yaml)', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path(r'', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('users/', include('users.urls')),
+    path('api/', include('users.urls')),
     path('api/', include('tasks.urls'))
 ]
