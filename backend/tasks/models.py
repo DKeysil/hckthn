@@ -67,23 +67,3 @@ class History(models.Model):
 
     type = models.IntegerField(choices=Type.choices)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='histories')
-
-
-# @receiver(pre_save, sender=Task)
-# def handle_for_changes(sender,  **kwargs):
-#     print(sender)
-#     print(kwargs)
-#
-#     old_task = kwargs.get('instance')
-#     task = Task.objects.get(id=old_task.id)
-#     if old_task.column_order != task.column_order:
-#         return
-#
-#     # if old_task.state != task.state:
-#     #     History.objects.create(
-#     #         task=task,
-#     #         type=4,
-#     #         user=,
-#     #     )
-#
-#     # if old_task.description != task.description:

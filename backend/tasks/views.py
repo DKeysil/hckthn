@@ -43,6 +43,33 @@ class TaskViewSet(viewsets.ModelViewSet):
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_fields = ['plan']
 
+    def update(self, request, *args, **kwargs):
+        data = request.data
+        user = request.user
+        print(request.user)
+        print(data)
+
+        old_task = self.get_object()
+        if old_task.column_order != data.get('column_order'):
+            pass
+
+        if old_task.state != data.get('state'):
+            History.objects.create(
+                task=old_task,
+                type=4,
+                user=user,
+            )
+
+        if old_task.description != data.get('description'):
+            History.objects.create(
+                task=old_task,
+                type=3,
+                user=user,
+            )
+        # TODO: сделать историю с типом FINISH и INITIALIZER
+        print(args, kwargs)
+        return super(TaskViewSet, self).update(request, *args, **kwargs)
+
 
 class NotificationViewSet(viewsets.ModelViewSet):
     """
