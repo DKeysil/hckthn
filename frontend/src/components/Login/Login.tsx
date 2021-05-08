@@ -26,7 +26,6 @@ const Login = (props: Props) => {
     <div className={styles.wrapper}>
       <Card className={styles.card}>
         <Form
-          name="basic"
           onFinish={handleFinish}
           labelCol={{ span: 8 }}
           wrapperCol={{ span: 16 }}

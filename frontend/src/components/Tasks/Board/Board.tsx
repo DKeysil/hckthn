@@ -11,6 +11,7 @@ import { Button } from 'antd'
 import { Task } from '../../../interfaces/task'
 import { useTasksMutation } from '../../../hooks/useTasks'
 import { useQueryClient } from 'react-query'
+import NewTask from '../../common/NewTask/NewTask'
 
 interface Props {
   tasks?: Task[]
@@ -83,9 +84,11 @@ const Board = (props: Props) => {
     handlePatchTask(removed, destination.index, destinationId, newState).then()
   }
 
+  const [visible, setVisible] = useState(false)
+
   return (
     <>
-      <Button className={styles.button} onClick={() => null}>
+      <Button className={styles.button} onClick={() => setVisible(true)}>
         Add new item
       </Button>
       <div className={styles.wrapper}>
@@ -122,6 +125,7 @@ const Board = (props: Props) => {
           ))}
         </DragDropContext>
       </div>
+      <NewTask visible={visible} setVisible={setVisible} tasks={state} />
     </>
   )
 }

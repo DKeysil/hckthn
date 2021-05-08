@@ -1,0 +1,11 @@
+.wrapper {
+  :global(.ant-form-item-label) {
+    display: flex;
+  }
+
+  :global(.ant-drawer-header) {
+    height: 73px;
+    display: flex;
+    align-items: center;
+  }
+}
