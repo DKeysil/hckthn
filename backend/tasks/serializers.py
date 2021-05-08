@@ -14,12 +14,6 @@ class PlanSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class TaskSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Task
-        fields = '__all__'
-
-
 class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
@@ -29,4 +23,12 @@ class NotificationSerializer(serializers.ModelSerializer):
 class HistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = History
+        fields = '__all__'
+
+
+class TaskSerializer(serializers.ModelSerializer):
+    histories = HistorySerializer(many=True)
+
+    class Meta:
+        model = Task
         fields = '__all__'
