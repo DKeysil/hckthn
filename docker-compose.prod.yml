@@ -27,12 +27,24 @@ services:
     entrypoint: nginx -g 'daemon off;'
     volumes:
       - react-build:/build
-      -  ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-    ports:
-      - 1337:80
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.statickeysil.rule=Host(`dkeysil.dmitrydavis.xyz`)"
+      - "traefik.http.routers.statickeysil.tls=true"
+      - "traefik.http.routers.statickeysil.tls.certresolver=cf"
+      - "traefik.http.routers.statickeysil.entryPoints=web"
+      - "traefik.http.services.statickeysil.loadbalancer.server.port=80"
     depends_on:
       - frontend
 
 volumes:
   postgres_data:
   react-build:
+
+networks:
+  traefik:
+    external: true
+    version: "3.7"
