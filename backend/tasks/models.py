@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from users.models import User
+
 # Create your models here.
 
 
@@ -38,11 +39,14 @@ class Task(models.Model):
     state = models.IntegerField(choices=State.choices)
 
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE, related_name="tasks")
+    column_order = models.IntegerField(null=True)
 
 
 class Notification(models.Model):
     checked = models.BooleanField()
-    task = models.ForeignKey(Task, on_delete=models.CASCADE, related_name="notifications")
+    task = models.ForeignKey(
+        Task, on_delete=models.CASCADE, related_name="notifications"
+    )
     timestamp = models.DateTimeField(auto_now_add=timezone.now)
 
 
