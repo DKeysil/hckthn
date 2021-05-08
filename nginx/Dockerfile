@@ -1,6 +1,6 @@
 FROM node:latest as build-stage
 WORKDIR /frontend
-COPY ./frontend/package*.json ./
+COPY ./frontend/package.json ./
 RUN npm install
 COPY ./frontend ./
 RUN npm run build
