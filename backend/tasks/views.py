@@ -8,6 +8,7 @@ from .models import (
     Notification, History
 )
 from rest_framework.permissions import IsAuthenticated
+import django_filters.rest_framework
 
 # Create your views here.
 
@@ -28,6 +29,8 @@ class PlanViewSet(viewsets.ModelViewSet):
     serializer_class = PlanSerializer
     queryset = Plan.objects.all()
     permission_classes = (IsAuthenticated,)
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_fields = ['team']
 
 
 class TaskViewSet(viewsets.ModelViewSet):
@@ -37,6 +40,8 @@ class TaskViewSet(viewsets.ModelViewSet):
     serializer_class = TaskSerializer
     queryset = Task.objects.all()
     permission_classes = (IsAuthenticated,)
+    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filterset_fields = ['plan']
 
 
 class NotificationViewSet(viewsets.ModelViewSet):

@@ -8,4 +8,4 @@ class User(AbstractUser):
         MENTOR = 2
 
     role = models.IntegerField(choices=Role.choices, default=Role.STUDENT)
-    team = models.ForeignKey("tasks.Team", on_delete=models.CASCADE, related_name="users", null=True)
+    team = models.ForeignKey("tasks.Team", on_delete=models.CASCADE, related_name="users", default=1)
