@@ -10,6 +10,21 @@ enum State {
   closed,
 }
 
+enum Event {
+  initialize = 1,
+  close,
+  changeDescription,
+  changeState,
+}
+
+interface History {
+  id: number
+  task_id: number
+  timestamp: string
+  type: Event
+  user: number
+}
+
 export interface Task {
   id: number
   title: string
@@ -21,5 +36,6 @@ export interface Task {
   state: State
   plan: number
   responsibles: number
+  histories: History[]
   mentors?: []
 }
