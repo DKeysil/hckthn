@@ -30,8 +30,6 @@ services:
     volumes:
       - react-build:/build
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
-    networks:
-      - traefik
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.statickeysil.rule=Host(`dkeysil.dmitrydavis.xyz`)"
@@ -68,5 +66,6 @@ volumes:
   react-build:
 
 networks:
-  traefik:
-    external: true
+  default:
+    external:
+      name: traefik
