@@ -1,6 +1,6 @@
 from celery import shared_task
-from .models import Task, Notification
-from datetime import datetime
+from tasks.models import Task, Notification
+from django.utils import timezone
 
 
 def change_status_on_issue(task: Task):
@@ -21,6 +21,6 @@ def check_tasks_deadline():
     tasks = Task.objects.exclude(state=3).exclude(state=4).exclude(type=2).all()
 
     for task in tasks:
-        if task.end_date > datetime.now():
+        if timezone.now() > task.end_date:
             change_status_on_issue(task)
             create_notification(task)

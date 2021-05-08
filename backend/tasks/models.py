@@ -22,7 +22,7 @@ class Task(models.Model):
     mentors = models.ManyToManyField(User, null=True)
     description = models.TextField(null=True)
     start_date = models.DateTimeField()
-    end_date = models.DateTimeField(null=True)
+    end_date = models.DateTimeField()
 
     class Type(models.IntegerChoices):
         TASK = 1
