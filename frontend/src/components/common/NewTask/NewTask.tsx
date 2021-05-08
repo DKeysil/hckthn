@@ -3,6 +3,8 @@ import { Dispatch, useEffect } from 'react'
 import styles from './newTask.module.scss'
 import { Task } from '../../../interfaces/task'
 import moment from 'moment'
+import api from "../../../api";
+import History from "./History/History";
 
 interface Props {
   visible: boolean
@@ -27,9 +29,10 @@ const NewTask = (props: Props) => {
     valuesCopy.end_date = values.interval[1].toJSON()
     delete valuesCopy.interval
     valuesCopy.type = 1
+    valuesCopy.plan = 1
     valuesCopy.column_order = tasks[values.state - 1].length
     console.log(values, valuesCopy)
-    // await api.post(`/tasks/`, values)
+    await api.post(`/tasks/`, valuesCopy)
   }
 
   useEffect(() => {
@@ -43,7 +46,6 @@ const NewTask = (props: Props) => {
       visible={visible}
       onClose={() => setVisible(false)}
       title="Create new task"
-      className={styles.wrapper}
       width="600"
     >
       <Form
@@ -51,9 +53,10 @@ const NewTask = (props: Props) => {
         wrapperCol={{ span: 19 }}
         size="large"
         onFinish={handleFinish}
+        className={styles.wrapper}
         form={form}
       >
-        <Form.Item label="Task" name="username" rules={[{ required: true }]}>
+        <Form.Item label="Task" name="title" rules={[{ required: true }]}>
           <Input placeholder="Task" />
         </Form.Item>
         <Form.Item label="Description" name="description">
@@ -89,6 +92,7 @@ const NewTask = (props: Props) => {
           </Button>
         </Form.Item>
       </Form>
+      <History />
     </Drawer>
   )
 }
