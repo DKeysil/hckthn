@@ -6,7 +6,7 @@ node_modules
 /dist
 vetur.config.js
 workspace.code-workspace
-
+mongodb/
 
 # env files
 .env.local
