@@ -78,7 +78,8 @@ def create_objects():
         end_date=datetime(year=2021, month=5, day=6, hour=17, minute=15),
         type=0,
         plan=plan_1,
-        state=2
+        state=2,
+        column_order=0,
     )
 
     task_1.responsibles.set([user_1, user_2])
@@ -89,7 +90,8 @@ def create_objects():
         end_date=datetime(year=2021, month=5, day=13, hour=10, minute=11),
         type=0,
         plan=plan_1,
-        state=1
+        state=1,
+        column_order=1,
     )
 
     task_2.responsibles.set([user_1, user_2])
@@ -102,7 +104,8 @@ def create_objects():
         end_date=datetime(year=2021, month=5, day=6, hour=17, minute=15),
         type=1,
         plan=plan_2,
-        state=2
+        state=2,
+        column_order=0,
     )
 
     task_3.responsibles.set([user_3, user_4])
@@ -114,7 +117,8 @@ def create_objects():
         end_date=datetime(year=2021, month=5, day=15, hour=17, minute=15),
         type=1,
         plan=plan_2,
-        state=1
+        state=1,
+        column_order=1,
     )
 
     task_4.responsibles.set([user_3, user_4])
