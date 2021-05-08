@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 from users.models import User
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -40,6 +42,9 @@ class Task(models.Model):
 
     plan = models.ForeignKey(Plan, on_delete=models.CASCADE, related_name="tasks")
     column_order = models.IntegerField()
+    #
+    # def save(self, *args, **kwargs):
+    #     super(Task, self).save(*args, **kwargs)
 
 
 class Notification(models.Model):
@@ -61,3 +66,24 @@ class History(models.Model):
         CHANGE_STATE = 4
 
     type = models.IntegerField(choices=Type.choices)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='histories')
+
+
+# @receiver(pre_save, sender=Task)
+# def handle_for_changes(sender,  **kwargs):
+#     print(sender)
+#     print(kwargs)
+#
+#     old_task = kwargs.get('instance')
+#     task = Task.objects.get(id=old_task.id)
+#     if old_task.column_order != task.column_order:
+#         return
+#
+#     # if old_task.state != task.state:
+#     #     History.objects.create(
+#     #         task=task,
+#     #         type=4,
+#     #         user=,
+#     #     )
+#
+#     # if old_task.description != task.description:
