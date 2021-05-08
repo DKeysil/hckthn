@@ -24,27 +24,62 @@ services:
     build:
       context: bot
       dockerfile: Dockerfile
-    restart: unless-stopped
-    container_name: take-pills-bot
+    restart: always
+    container_name: 'bot'
+    command: ./run.sh
     environment:
-      MONGODB_DATABASE: project
-      MONGODB_USERNAME: mongorootuser
-      MONGODB_PASSWORD: PswdRoot
-      MONGODB_HOSTNAME: mongodb
-      MONGODB_PORT: 27017
-      TZ: Europe/Moscow
-    links:
-      - mongodb
+      - REDIS_HOST=redis
+      - MONGO_HOST=mongodb
+      - MONGO_DB=hktn_bot
+      - MONGO_PORT=27017
+    volumes:
+      - .:/app
+    ports:
+      - 3500:3500
   mongodb:
-    image: mongo:latest
-    restart: unless-stopped
+    image: mongo
+    hostname: mongodb
+    container_name: 'bot_app_mongodb'
     volumes:
       - ./mongodb/data:/data/db
     environment:
-      MONGO_INITDB_ROOT_USERNAME: mongorootuser
-      MONGO_INITDB_ROOT_PASSWORD: PswdRoot
-      MONGODB_DATA_DIR: /data/db
-      MONDODB_LOG_DIR: /dev/null
-      TZ: Europe/Moscow
+      - MONGO_INITDB_ROOT_USERNAME=hktn_bot
+      - MONGO_INITDB_ROOT_PASSWORD=hktn_bot
+      - MONGO_INITDB_DATABASE=hktn_bot
+    ports:
+      - 27017:27017
+  redis:
+    hostname: redis
+    image: redis
+    restart: always
+    container_name: 'bot_app_redis'
+    ports:
+      - 6379
+
+  celery:
+    build: ./bot
+    restart: always
+    container_name: 'bot_app_celery'
+    command: celery -A app_celery worker -l info -B
+    environment:
+      - CELERY_BROKER_URL=amqp://guest@rabbitmq//
+      - MONGO_HOST=mongodb
+      - MONGO_DB=deagostini
+      - MONGO_PORT=27017
+    volumes:
+      - .:/app
+    links:
+      - rabbitmq
+    depends_on:
+      - bot
+      - rabbitmq
+  rabbitmq:
+    hostname: rabbitmq
+    image: rabbitmq
+    restart: always
+    container_name: 'bot_app_rebbitmq'
+    ports:
+      - 5672:5672
+      - 15672:15672
 volumes:
   postgres_data:
