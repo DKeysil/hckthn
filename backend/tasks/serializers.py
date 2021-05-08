@@ -27,7 +27,7 @@ class HistorySerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    histories = HistorySerializer(many=True)
+    histories = HistorySerializer(many=True, read_only=True)
 
     class Meta:
         model = Task
