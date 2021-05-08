@@ -3,8 +3,9 @@ import { Dispatch, useEffect } from 'react'
 import styles from './newTask.module.scss'
 import { Task } from '../../../interfaces/task'
 import moment from 'moment'
-import api from "../../../api";
-import History from "./History/History";
+import api from '../../../api'
+import History from './History/History'
+import { useQueryClient } from 'react-query'
 
 interface Props {
   visible: boolean
@@ -22,6 +23,7 @@ const options = [
 const NewTask = (props: Props) => {
   const { visible, setVisible, tasks, task } = props
   const [form] = Form.useForm()
+  const queryClient = useQueryClient()
 
   const handleFinish = async (values: any) => {
     const valuesCopy = { ...values }
@@ -31,15 +33,25 @@ const NewTask = (props: Props) => {
     valuesCopy.type = 1
     valuesCopy.plan = 1
     valuesCopy.column_order = tasks[values.state - 1].length
-    console.log(values, valuesCopy)
-    await api.post(`/tasks/`, valuesCopy)
+    if (!valuesCopy.mentors.length) delete valuesCopy.mentors
+    if (task) await api.patch(`/tasks/${task.id}/`, valuesCopy)
+    else await api.post(`/tasks/`, valuesCopy)
+    setVisible(false)
+    await queryClient.invalidateQueries([`tasks`])
+  }
+
+  const handleDelete = async () => {
+    if (task) await api.delete(`/tasks/${task.id}`)
+    setVisible(false)
+    await queryClient.invalidateQueries([`tasks`])
   }
 
   useEffect(() => {
     if (!task) return
     const values = { ...task } as any
     values.interval = [moment(task.start_date), moment(task.end_date)]
-  }, [task])
+    form.setFieldsValue(values)
+  }, [form, task])
 
   return (
     <Drawer
@@ -47,13 +59,13 @@ const NewTask = (props: Props) => {
       onClose={() => setVisible(false)}
       title="Create new task"
       width="600"
+      className={styles.wrapper}
     >
       <Form
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 19 }}
         size="large"
         onFinish={handleFinish}
-        className={styles.wrapper}
         form={form}
       >
         <Form.Item label="Task" name="title" rules={[{ required: true }]}>
@@ -88,11 +100,16 @@ const NewTask = (props: Props) => {
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 5, span: 19 }}>
           <Button type="primary" htmlType="submit">
-            Create
+            {task ? `Save` : `Create`}
           </Button>
+          {task && (
+            <Button className={styles.delete} danger onClick={handleDelete}>
+              Delete
+            </Button>
+          )}
         </Form.Item>
       </Form>
-      <History />
+      {task && !!task.histories.length && <History />}
     </Drawer>
   )
 }

@@ -7,7 +7,7 @@ import {
 } from 'react-beautiful-dnd'
 import styles from './board.module.scss'
 import Card from './Card/Card'
-import { Button } from 'antd'
+import { Button, Typography } from 'antd'
 import { Task } from '../../../interfaces/task'
 import { useTasksMutation } from '../../../hooks/useTasks'
 import { useQueryClient } from 'react-query'
@@ -92,6 +92,9 @@ const Board = (props: Props) => {
         Add new item
       </Button>
       <div className={styles.wrapper}>
+        <Typography.Title level={4} className={styles.title}>To Do</Typography.Title>
+        <Typography.Title level={4} className={styles.title}>In Progress</Typography.Title>
+        <Typography.Title level={4} className={styles.title}>Done</Typography.Title>
         <DragDropContext onDragEnd={onDragEnd}>
           {state.map((list, index) => (
             <Droppable key={index} droppableId={index.toString()}>
@@ -113,7 +116,7 @@ const Board = (props: Props) => {
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <Card task={task} />
+                          <Card task={task} tasks={state} />
                         </div>
                       )}
                     </Draggable>

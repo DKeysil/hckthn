@@ -1,5 +1,7 @@
 .wrapper {
-  margin-bottom: 48px;
+  :global(.ant-form) {
+    margin-bottom: 48px;
+  }
 
   :global(.ant-form-item-label) {
     display: flex;
@@ -10,4 +12,8 @@
     display: flex;
     align-items: center;
   }
+}
+
+.delete {
+  margin-left: 24px;
 }
