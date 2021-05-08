@@ -1,0 +1,12 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.card {
+  :global(.ant-card-body) {
+    padding-bottom: 0;
+  }
+}

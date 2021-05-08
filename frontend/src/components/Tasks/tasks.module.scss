@@ -1,0 +1,26 @@
+.header {
+  height: 73px;
+  padding: 12px 24px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.title {
+  margin-bottom: 11px !important;
+}
+
+.tabs {
+  :global(.ant-tabs-nav) {
+    margin: 0;
+
+    :global(.ant-tabs-tab) {
+      padding: 0 0 10px;
+      line-height: 12px;
+      font-size: 12px;
+    }
+  }
+}
+
+.content {
+  padding: 16px 24px;
+  height: calc(100% - 73px);
+}
