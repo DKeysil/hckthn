@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import api from '../api'
 import { Task } from '../interfaces/task'
 
@@ -9,16 +9,15 @@ const getTasks = async () => {
 
 const useTasks = () => useQuery<Task[]>(`tasks`, getTasks)
 
-const patchTask = async ({ id, ...task }: Task) => {
+const patchTask = async ({ id, ...task }: { id: number }) => {
   const { data } = await api.patch(`/tasks/${id}/`, task)
   return data
 }
 
 const useTasksMutation = () => {
-  const queryClient = useQueryClient()
-  return useMutation<Task, unknown, Task>(patchTask, {
-    onSettled: () => queryClient.invalidateQueries(`tasks`),
-  })
+  return useMutation<Task, unknown, { id: number; [key: string]: unknown }>(
+    patchTask,
+  )
 }
 
 export { useTasks, useTasksMutation }

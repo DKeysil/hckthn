@@ -1,5 +1,5 @@
 import styles from './login.module.scss'
-import { Button, Card, Form, Input } from 'antd'
+import { Button, Card, Form, Input, message } from 'antd'
 import api from '../../api'
 import { Dispatch } from 'react'
 
@@ -11,11 +11,15 @@ const Login = (props: Props) => {
   const { setAuthorized } = props
 
   const handleFinish = async (values: Record<string, unknown>) => {
-    console.log(values)
-    const { data } = await api.post(`/token/`, values)
-    api.defaults.headers.Authorization = `Bearer ${data.access}`
-    localStorage.setItem(`token`, data.refresh)
-    setAuthorized(true)
+    try {
+      const { data } = await api.post(`/token/`, values)
+      api.defaults.headers.Authorization = `Bearer ${data.access}`
+      localStorage.setItem(`token`, data.refresh)
+      setAuthorized(true)
+    } catch (error) {
+      console.error(error)
+      message.error(`Ошибка входа`)
+    }
   }
 
   return (
