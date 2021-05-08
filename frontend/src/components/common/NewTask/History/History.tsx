@@ -27,7 +27,8 @@ const History = (props: Props) => {
         {history.map((stage) => (
           <Timeline.Item>
             {eventToName[stage.type]} at{' '}
-            {moment(stage.timestamp).format(`HH:mm DD-MM-YYYY`)}
+            {moment(stage.timestamp).format(`HH:mm DD-MM-YYYY`)} by{' '}
+            {users?.find((user) => user.id === stage.user)?.username}
           </Timeline.Item>
         ))}
       </Timeline>

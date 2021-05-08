@@ -6,6 +6,7 @@ import moment from 'moment'
 import api from '../../../api'
 import History from './History/History'
 import { useQueryClient } from 'react-query'
+import { useUsers } from '../../../hooks/useUsers'
 
 interface Props {
   visible: boolean
@@ -24,6 +25,7 @@ const NewTask = (props: Props) => {
   const { visible, setVisible, tasks, task } = props
   const [form] = Form.useForm()
   const queryClient = useQueryClient()
+  const { data: users } = useUsers()
 
   const handleFinish = async (values: any) => {
     const valuesCopy = { ...values }
@@ -53,11 +55,16 @@ const NewTask = (props: Props) => {
     form.setFieldsValue(values)
   }, [form, task])
 
+  const usersOptions = users?.map((user) => ({
+    value: user.id,
+    label: user.username,
+  }))
+
   return (
     <Drawer
       visible={visible}
       onClose={() => setVisible(false)}
-      title="Create new task"
+      title={task ? task.title : `New task`}
       width="600"
       className={styles.wrapper}
     >
@@ -92,11 +99,15 @@ const NewTask = (props: Props) => {
           <Select
             mode="multiple"
             placeholder="Responsibles"
-            options={options}
+            options={usersOptions}
           />
         </Form.Item>
         <Form.Item label="Mentors" name="mentors">
-          <Select mode="multiple" placeholder="Mentors" options={options} />
+          <Select
+            mode="multiple"
+            placeholder="Mentors"
+            options={usersOptions}
+          />
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 5, span: 19 }}>
           <Button type="primary" htmlType="submit">
