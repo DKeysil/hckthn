@@ -1,11 +1,18 @@
 import { Card as AntCard, Typography } from 'antd'
 import styles from './card.module.scss'
+import { Task } from '../../../../interfaces/task'
 
-const Card = () => {
+interface Props {
+  task: Task
+}
+
+const Card = (props: Props) => {
+  const { task } = props
+
   return (
     <div className={styles.wrapper}>
       <AntCard>
-        <Typography.Text>Task</Typography.Text>
+        <Typography.Text>{task.title}</Typography.Text>
       </AntCard>
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   DragDropContext,
   Droppable,
@@ -8,20 +8,37 @@ import {
 import styles from './board.module.scss'
 import Card from './Card/Card'
 import { Button } from 'antd'
+import { Task } from '../../../interfaces/task'
+import { useTasksMutation } from '../../../hooks/useTasks'
 
-// fake data generator
-const getItems = (count: number, offset = 0) => {
-  return Array.from({ length: count }, (v, k) => k).map(
-    (k) => `item-${k + offset}-${new Date().getTime()}`,
-  )
+interface Props {
+  tasks?: Task[]
 }
 
-const Board = () => {
-  const [state, setState] = useState<string[][]>([
-    getItems(10),
-    getItems(5, 10),
-    getItems(5, 15),
-  ])
+const Board = (props: Props) => {
+  const { tasks } = props
+  const { mutateAsync: patchTask } = useTasksMutation()
+  const [state, setState] = useState<Task[][]>([[], [], []])
+
+  const getItems = useCallback(
+    (state: number) => {
+      return (tasks as Task[])
+        .filter((task) => state === task.state)
+        .sort((a, b) => a.column_order - b.column_order)
+    },
+    [tasks],
+  )
+
+  useEffect(() => {
+    if (!tasks) return
+    setState([getItems(1), getItems(2), getItems(3)])
+  }, [getItems, tasks])
+
+  const handlePatchTask = async (task: Task, index: number) => {
+    const taskCopy = { ...task, column_order: index }
+    if (!taskCopy.mentors?.length) delete taskCopy.mentors
+    await patchTask(taskCopy)
+  }
 
   const onDragEnd = ({ source, destination }: DropResult) => {
     if (!destination) return
@@ -31,26 +48,27 @@ const Board = () => {
     const destinationClone = Array.from(state[destinationId])
 
     const [removed] = sourceClone.splice(source.index, 1)
-    destinationClone.splice(destination.index, 0, removed)
-
-    const result = {} as Record<string, string[]>
-    result[source.droppableId] = sourceClone
-    result[destination.droppableId] = destinationClone
+    const result = {} as Record<string, Task[]>
+    if (source.droppableId === destination.droppableId) {
+      sourceClone.splice(destination.index, 0, removed)
+      result[sourceId] = sourceClone
+    } else {
+      destinationClone.splice(destination.index, 0, removed)
+      result[sourceId] = sourceClone
+      result[destinationId] = destinationClone
+    }
     const newState = [...state]
     newState[sourceId] = result[sourceId]
     newState[destinationId] = result[destinationId]
 
     setState(newState)
+    console.log(destination.index)
+    handlePatchTask(removed, destination.index).then()
   }
 
   return (
     <>
-      <Button
-        className={styles.button}
-        onClick={() => {
-          setState([...state, getItems(1)])
-        }}
-      >
+      <Button className={styles.button} onClick={() => null}>
         Add new item
       </Button>
       <div className={styles.wrapper}>
@@ -63,15 +81,19 @@ const Board = () => {
                   ref={provided.innerRef}
                   className={styles.list}
                 >
-                  {list.map((id, index) => (
-                    <Draggable key={id} draggableId={id} index={index}>
+                  {list.map((task, index) => (
+                    <Draggable
+                      key={task.id}
+                      draggableId={task.id.toString()}
+                      index={index}
+                    >
                       {(provided) => (
                         <div
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <Card />
+                          <Card task={task} />
                         </div>
                       )}
                     </Draggable>

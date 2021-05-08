@@ -3,8 +3,10 @@ import styles from './tasks.module.scss'
 import React, { useState } from 'react'
 import Board from './Board/Board'
 import List from './List/List'
+import { useTasks } from '../../hooks/useTasks'
 
 const Tasks = () => {
+  const { data: tasks } = useTasks()
   const [view, setView] = useState(`board`)
 
   const handleChangeTab = (tab: string) => {
@@ -28,7 +30,7 @@ const Tasks = () => {
         </Tabs>
       </div>
       <div className={styles.content}>
-        {view === `board` ? <Board /> : <List />}
+        {view === `board` ? <Board tasks={tasks} /> : <List />}
       </div>
     </>
   )

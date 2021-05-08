@@ -8,13 +8,13 @@ import {
 import classNames from 'classnames'
 import styles from './menu.module.scss'
 import { useHistory } from 'react-router-dom'
-import { pathToTitle } from '../../../config'
+import { PATHS } from '../../../config'
 
 const Menu = () => {
   const history = useHistory()
   const [collapsed, setCollapsed] = useState(true)
   const [activeKey, setActiveKey] = useState(
-    Object.keys(pathToTitle).find((path) =>
+    Object.values(PATHS).find((path) =>
       history.location.pathname.includes(path),
     ) as string,
   )
@@ -26,7 +26,7 @@ const Menu = () => {
   useEffect(() => {
     history.listen((location) =>
       setActiveKey(
-        Object.keys(pathToTitle).find((path) =>
+        Object.values(PATHS).find((path) =>
           location.pathname.includes(path),
         ) as string,
       ),
