@@ -1,0 +1,13 @@
+.wrapper {
+  overflow-y: auto;
+  height: 100%;
+}
+
+.item {
+  cursor: pointer;
+}
+
+.closed {
+  composes: item;
+  opacity: 0.5;
+}

@@ -18,7 +18,7 @@ const Card = (props: Props) => {
       <AntCard onClick={() => setVisible(true)}>
         <Typography.Text>{task.title}</Typography.Text>
       </AntCard>
-      {tasks && (
+      {task && tasks && (
         <NewTask
           visible={visible}
           setVisible={setVisible}

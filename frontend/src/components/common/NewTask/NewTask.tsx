@@ -33,7 +33,7 @@ const NewTask = (props: Props) => {
     valuesCopy.type = 1
     valuesCopy.plan = 1
     valuesCopy.column_order = tasks[values.state - 1].length
-    if (!valuesCopy.mentors.length) delete valuesCopy.mentors
+    if (!valuesCopy.mentors?.length) delete valuesCopy.mentors
     if (task) await api.patch(`/tasks/${task.id}/`, valuesCopy)
     else await api.post(`/tasks/`, valuesCopy)
     setVisible(false)
@@ -62,11 +62,11 @@ const NewTask = (props: Props) => {
       className={styles.wrapper}
     >
       <Form
+        form={form}
         labelCol={{ span: 5 }}
         wrapperCol={{ span: 19 }}
         size="large"
         onFinish={handleFinish}
-        form={form}
       >
         <Form.Item label="Task" name="title" rules={[{ required: true }]}>
           <Input placeholder="Task" />

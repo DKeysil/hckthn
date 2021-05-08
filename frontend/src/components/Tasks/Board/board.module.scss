@@ -1,9 +1,9 @@
 .wrapper {
   display: grid;
-  margin-right: -24px;
   width: 100%;
-  overflow: scroll;
+  overflow-x: scroll;
   grid-template-columns: repeat(3, 280px);
+  grid-template-rows: 28px 1fr;
   grid-gap: 16px 24px;
   max-height: calc(100% - 64px);
   -ms-overflow-style: none; /* IE and Edge */
@@ -29,7 +29,7 @@
   padding: 12px 12px 4px;
   margin-right: 24px;
   width: 280px;
-  overflow: scroll;
+  overflow-y: scroll;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 
