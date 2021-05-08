@@ -109,7 +109,7 @@ const NewTask = (props: Props) => {
           )}
         </Form.Item>
       </Form>
-      {task && !!task.histories.length && <History />}
+      {task && !!task.histories.length && <History history={task.histories} />}
     </Drawer>
   )
 }

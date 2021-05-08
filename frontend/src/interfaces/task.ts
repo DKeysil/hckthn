@@ -10,11 +10,18 @@ enum State {
   closed,
 }
 
+enum Event {
+  initialize = 1,
+  close,
+  changeDescription,
+  changeState,
+}
+
 interface History {
   id: number
   task_id: number
   timestamp: string
-  type: State
+  type: Event
   user: number
 }
 
