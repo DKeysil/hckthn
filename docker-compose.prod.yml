@@ -6,8 +6,6 @@ services:
       context: ./backend
       dockerfile: Dockerfile.prod
     command: gunicorn hckthn.wsgi:application --bind 0.0.0.0:8000
-    volumes:
-      - media_volume:/home/backend/web/mediafiles
     expose:
       - 8000
     env_file:
@@ -20,15 +18,21 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env.prod.db
-  nginx:
-    build: ./nginx
+  frontend:
     volumes:
-      - media_volume:/home/backend/web/mediafiles
+      - react-build:/home/frontend/build
+    build: ./frontend
+  nginx:
+    image: nginx:stable-alpine
+    entrypoint: nginx -g 'daemon off;'
+    volumes:
+      - react-build:/build
+      -  ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
     ports:
       - 1337:80
     depends_on:
-      - web
+      - frontend
 
 volumes:
   postgres_data:
-  media_volume:
+  react-build:
