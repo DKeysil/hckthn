@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { PATHS } from './config'
 
-const api = axios.create({ baseURL: `http://backend:8000/api` })
+const api = axios.create({ baseURL: `/api` })
 
 const exceptions = [`/token/`, `/token/refresh/`]
 
