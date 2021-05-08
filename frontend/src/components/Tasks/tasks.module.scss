@@ -22,5 +22,6 @@
 
 .content {
   padding: 16px 24px;
-  height: calc(100% - 73px);
+  height: calc(100vh - 73px);
+  max-height: calc(100vh - 73px);
 }
