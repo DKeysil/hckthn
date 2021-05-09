@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { Menu as AntMenu, Typography } from 'antd'
+import { Badge, Menu as AntMenu, Typography } from 'antd'
 import {
   CheckCircleOutlined,
   BarChartOutlined,
   MenuOutlined,
+  BellOutlined,
 } from '@ant-design/icons'
 import classNames from 'classnames'
 import styles from './menu.module.scss'
 import { useHistory } from 'react-router-dom'
 import { PATHS } from '../../../config'
+import { useNotifications } from '../../../hooks/useNotifications'
 
 const Menu = () => {
   const history = useHistory()
+  const { data: notifications } = useNotifications()
   const [collapsed, setCollapsed] = useState(true)
   const [activeKey, setActiveKey] = useState(
     Object.values(PATHS).find((path) =>
@@ -64,6 +67,22 @@ const Menu = () => {
       </AntMenu.Item>
       <AntMenu.Item key="/gantt" icon={<BarChartOutlined />}>
         Gantt
+      </AntMenu.Item>
+      <AntMenu.Item
+        key="/notifications"
+        icon={
+          <Badge
+            dot
+            count={
+              notifications?.filter((notification) => !notification.checked)
+                .length
+            }
+          >
+            <BellOutlined />
+          </Badge>
+        }
+      >
+        Notifications
       </AntMenu.Item>
     </AntMenu>
   )

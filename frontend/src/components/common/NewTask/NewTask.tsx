@@ -7,6 +7,7 @@ import api from '../../../api'
 import History from './History/History'
 import { useQueryClient } from 'react-query'
 import { useUsers } from '../../../hooks/useUsers'
+import { useTasks } from '../../../hooks/useTasks'
 
 interface Props {
   visible: boolean
@@ -26,6 +27,7 @@ const NewTask = (props: Props) => {
   const [form] = Form.useForm()
   const queryClient = useQueryClient()
   const { data: users } = useUsers()
+  const { data: backendTasks } = useTasks()
 
   const handleFinish = async (values: any) => {
     const valuesCopy = { ...values }
@@ -80,6 +82,16 @@ const NewTask = (props: Props) => {
         </Form.Item>
         <Form.Item label="Description" name="description">
           <Input.TextArea placeholder="Description" />
+        </Form.Item>
+        <Form.Item label="Depends on" name="depends_on">
+          <Select
+            placeholder="Depends on"
+            options={backendTasks
+              ?.filter(
+                (extTask) => extTask.state < 4 && extTask.id !== task?.id,
+              )
+              .map((task) => ({ label: task.title, value: task.id }))}
+          />
         </Form.Item>
         <Form.Item
           label="Interval"
