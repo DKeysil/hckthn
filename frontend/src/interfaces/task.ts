@@ -38,4 +38,5 @@ export interface Task {
   responsibles: number
   histories: History[]
   mentors?: []
+  depends_on?: number
 }

@@ -2,3 +2,27 @@
   height: 73px;
   border-bottom: 1px solid #f0f0f0;
 }
+
+.wrapper {
+  padding: 24px;
+
+  :global(rect) {
+    stroke-width: 0 !important;
+  }
+
+  :global(text) {
+    font-family: inherit !important;
+  }
+
+  :global(.google-visualization-tooltip) {
+    width: 500px;
+  }
+
+  :global(g:last-of-type text:first-of-type) {
+    font-size: 12px !important;
+  }
+
+  * {
+    transition: all 0.3s;
+  }
+}

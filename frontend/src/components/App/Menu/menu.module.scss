@@ -6,6 +6,18 @@
   :global(.ant-menu-item-selected)::after {
     content: none;
   }
+
+  :global(.ant-menu-item) {
+
+    :global(.ant-badge) {
+      width: 14px !important;
+      line-height: 16px !important;
+    }
+
+    :global(.anticon) {
+      line-height: 16px !important;
+    }
+  }
 }
 
 .titleWrapper {

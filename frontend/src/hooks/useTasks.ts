@@ -2,12 +2,17 @@ import { useMutation, useQuery } from 'react-query'
 import api from '../api'
 import { Task } from '../interfaces/task'
 
-const getTasks = async () => {
-  const { data } = await api.get(`/tasks/`)
+interface GetTasks {
+  plan?: number
+}
+
+const getTasks = async (params?: GetTasks) => {
+  const { data } = await api.get(`/tasks/`, { params: { plan: params?.plan } })
   return data
 }
 
-const useTasks = () => useQuery<Task[]>(`tasks`, getTasks)
+const useTasks = (params?: GetTasks) =>
+  useQuery<Task[]>([`tasks`, params], () => getTasks(params))
 
 const patchTask = async ({ id, ...task }: { id: number }) => {
   const { data } = await api.patch(`/tasks/${id}/`, task)

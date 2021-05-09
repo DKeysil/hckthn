@@ -7,6 +7,7 @@ import Tasks from '../Tasks/Tasks'
 import Gantt from '../Gantt/Gantt'
 import api from '../../api'
 import Login from '../Login/Login'
+import Notifications from '../Notifications/Notifications'
 
 function App() {
   const [authorized, setAuthorized] = useState(false)
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route path={PATHS.GANTT}>
             <Gantt />
+          </Route>
+          <Route path={PATHS.NOTIFICATIONS}>
+            <Notifications />
           </Route>
           <Redirect to={PATHS.TASKS} />
         </Switch>
