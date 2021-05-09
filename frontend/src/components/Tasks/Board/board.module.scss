@@ -1,0 +1,39 @@
+.wrapper {
+  display: grid;
+  width: 100%;
+  overflow-x: scroll;
+  grid-template-columns: repeat(3, 280px);
+  grid-template-rows: 28px 1fr;
+  grid-gap: 16px 24px;
+  max-height: calc(100% - 64px);
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.title {
+  margin: 0 !important;
+}
+
+.button {
+  margin-bottom: 16px;
+}
+
+.list {
+  flex-shrink: 0;
+  background: #fafafa;
+  border-radius: 2px;
+  padding: 12px 12px 4px;
+  margin-right: 24px;
+  width: 280px;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

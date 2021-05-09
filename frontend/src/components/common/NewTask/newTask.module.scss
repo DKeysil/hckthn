@@ -1,0 +1,20 @@
+.wrapper {
+  :global(.ant-form) {
+    margin-bottom: 48px;
+  }
+
+  :global(.ant-form-item-label) {
+    display: flex;
+  }
+
+  :global(.ant-drawer-header) {
+    height: 73px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.delete {
+  margin-left: 24px;
+}
