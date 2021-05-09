@@ -25,6 +25,7 @@ class Task(models.Model):
     description = models.TextField(null=True)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
+    depends_on = models.ForeignKey("Task", on_delete=models.SET_NULL, related_name="tasks", null=True)
 
     class Type(models.IntegerChoices):
         TASK = 1
