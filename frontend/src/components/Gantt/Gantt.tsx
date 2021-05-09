@@ -34,11 +34,11 @@ const Gantt = () => {
       <div className={styles.wrapper}>
         <Chart
           width={'100%'}
+          height="100%"
           chartType="Gantt"
           data={data}
           options={{
             tooltip: { isHtml: true },
-            height: 400,
             gantt: {
               trackHeight: 52,
               palette: [

@@ -4,7 +4,8 @@
 }
 
 .wrapper {
-  padding: 24px;
+  padding: 16px 24px;
+  height: calc(100vh - 89px);
 
   :global(rect) {
     stroke-width: 0 !important;
